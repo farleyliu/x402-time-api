@@ -49,5 +49,6 @@ async function step2(req, res) {
 }
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 //app.get('/', (_, res) => res.redirect('https://github.com/farleyliu/x402-time-api')); // 文档
 app.listen(process.env.PORT, () => console.log(`⏰ x402-time-api on :${process.env.PORT}`));
