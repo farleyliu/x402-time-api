@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Pay 0.01 USDC → Get current time (x402 demo)</title>
+  <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
+</head>
+<body>
+  <h2>x402 极简支付体验</h2>
+  <button id="pay">付 0.01 USDC 拿时间</button>
+  <pre id="result"></pre>
+
+  <script>
+    const api = 'https://x402-time-api.vercel.app/now';
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const USDC = '0x833589fCD6EDdb5D08D282e8b50cD6ae25C03c3B';
+    const abi = ['function approve(address spender, uint amount) returns (bool)', 'function transferFrom(address from, address to, uint amount) returns (bool)'];
+
+    pay.onclick = async () => {
+      await provider.send('eth_requestAccounts', []);
+      const signer = provider.getSigner();
+      // 1. 请求 → 拿 402
+      const r1 = await fetch(api);
+      if (r1.status !== 402) return result.textContent = '无需付费或异常';
+      const req = JSON.parse(atob(r1.headers.get('x-payment-required')));
+      // 2. 链上付款
+      const usdc = new ethers.Contract(USDC, abi, signer);
+      const amount = ethers.utils.parseUnits(req.amount, 6);
+      const to = req.receiver;
+      const tx = await usdc.transferFrom(await signer.getAddress(), to, amount);
+      await tx.wait();
+      // 3. 重试带凭证
+      const r2 = await fetch(api, {headers: {'X-Payment': btoa(JSON.stringify({hash: tx.hash}))}});
+      const data = await r2.json();
+      result.textContent = JSON.stringify(data, null, 2);
+    };
+  </script>
+</body>
+</html>

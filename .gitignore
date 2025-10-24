@@ -1,0 +1,52 @@
+# ========== Node ==========
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# ========== OS ==========
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========== IDE ==========
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.default
+.idea/
+*.swp
+*.swo
+*~
+
+# ========== Build / Dist ==========
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.rpt2_cache/
+tsconfig.tsbuildinfo
+
+# ========== Env & Secrets =========*
+*.local
+*.env.local
+*.env.*.local
+.env
+
+# ========== Logs ==========
+logs/
+*.log
+*.log.*
+
+# ========== Misc =========*
+*.pid
+*.seed
+*.pid.lock
+*.tgz
+*.tar.gz
+.vercel
+.nownode_modules/
