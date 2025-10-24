@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "index.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "routes": [
+    { "src": "/now", "dest": "/index.js" },
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ]
+}
