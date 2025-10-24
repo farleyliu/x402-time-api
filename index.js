@@ -4,6 +4,11 @@ import { ethers } from 'ethers';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -43,5 +48,6 @@ async function step2(req, res) {
   }
 }
 
-app.get('/', (_, res) => res.redirect('https://github.com/farleyliu/x402-time-api')); // 文档
+app.use(express.static(path.join(__dirname, 'public')));
+//app.get('/', (_, res) => res.redirect('https://github.com/farleyliu/x402-time-api')); // 文档
 app.listen(process.env.PORT, () => console.log(`⏰ x402-time-api on :${process.env.PORT}`));
